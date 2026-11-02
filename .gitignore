@@ -8,3 +8,4 @@ dist/
 demo/build/
 demo.mp4
 .coverage
+launch/
