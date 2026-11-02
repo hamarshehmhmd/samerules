@@ -1,0 +1,34 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: pip install . pytest
+      - run: pytest -q -rs
+      - name: Smoke test (import -> sync -> check -> drift detected)
+        run: |
+          sh demo/make_repo.sh /tmp/shop-api
+          cd /tmp/shop-api
+          samerules import
+          samerules sync --force
+          samerules check
+          echo "- new rule" >> .agents/rules/main.md
+          if samerules check; then echo "check should have failed"; exit 1; fi
+          samerules sync
+          samerules check
+  install-script:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: SAMERULES_REF=${{ github.sha }} sh install.sh
+      - run: ~/.local/bin/samerules --version || samerules --version

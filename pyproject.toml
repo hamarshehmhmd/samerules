@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "samerules"
+version = "0.1.0"
+description = "One .agents/ folder for every AI coding agent: generates and drift-checks AGENTS.md, CLAUDE.md, Cursor rules, skills and MCP configs."
+readme = "README.md"
+license = "AGPL-3.0-or-later"
+license-files = ["LICENSE"]
+authors = [{ name = "Mohammad Hamarsheh" }]
+requires-python = ">=3.9"
+keywords = ["agents-md", "claude-code", "cursor", "codex", "gemini-cli", "mcp", "skills", "ai-coding-agents", "copilot"]
+classifiers = [
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/hamarshehmhmd/samerules"
+Issues = "https://github.com/hamarshehmhmd/samerules/issues"
+
+[project.scripts]
+samerules = "samerules.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "tests"]
+testpaths = ["tests"]

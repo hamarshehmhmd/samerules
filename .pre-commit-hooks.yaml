@@ -1,0 +1,12 @@
+- id: samerules-check
+  name: samerules check (agent configs match .agents/)
+  entry: samerules check
+  language: python
+  pass_filenames: false
+  always_run: true
+- id: samerules-sync
+  name: samerules sync (regenerate agent configs from .agents/)
+  entry: samerules sync
+  language: python
+  pass_filenames: false
+  files: ^\.agents/
